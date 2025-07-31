@@ -72,10 +72,9 @@ int main() {
 
     int menu = -1, opcao;
 
-
     while (menu != 0){
         printf("\nAgora escolha qual dos atributos das cidades você quer comparar (opção fora do menu o programa será encerrado.)\n");
-        printf("\n Opção 1: População\n Opção 2: Área\n Opção 3: PIB\n Opção 4: Densidade Populacional\n Opção 5: PIB Per Capita\n Opção 6: Ver todos os atributos das duas cartas\n Opção 0: Encerrar o programa\n");
+        printf("\n Opção 1: População\n Opção 2: Área\n Opção 3: PIB\n Opção 4: Densidade Populacional\n Opção 5: PIB Per Capita\n Opção 6: Ver todos os atributos das duas cartas\n Opção 7: Comparar dois atributos\n Opção 0: Encerrar o programa\n");
         printf("Digite aqui a opção desejada: ");
         scanf("%d", &opcao);
 
@@ -158,7 +157,69 @@ int main() {
                 printf("Você não digitou uma opção válida, tente novamente.\n\n");
             }
 
-        }else if (opcao == 0){
+        } else if (opcao == 7){
+            int attr1, attr2;
+            printf("\nEscolha o primeiro atributo:\n");
+            printf("1 - População | 2 - Área | 3 - PIB | 4 - Densidade Populacional | 5 - PIB per Capita\n");
+            scanf("%d", &attr1);
+
+            printf("\nEscolha o segundo atributo (diferente do primeiro):\n");
+            do {
+                printf("1 - População | 2 - Área | 3 - PIB | 4 - Densidade Populacional | 5 - PIB per Capita\n");
+                scanf("%d", &attr2);
+                if(attr2 == attr1) printf("Você não pode repetir o mesmo atributo! Tente novamente.\n");
+            } while(attr2 == attr1);
+
+            float soma1 = 0, soma2 = 0;
+
+            // Função inline com switch
+            for (int i = 1; i <= 2; i++) {
+                int atual = (i == 1) ? attr1 : attr2;
+                switch(atual) {
+                    case 1:
+                        printf("\nComparando População...\n");
+                        printf("Carta 1: %d | Carta 2: %d\n", populacao1, populacao2);
+                        (populacao1 > populacao2) ? printf("Carta 1 venceu este atributo!\n") : printf("Carta 2 venceu este atributo!\n");
+                        soma1 += populacao1;
+                        soma2 += populacao2;
+                        break;
+                    case 2:
+                        printf("\nComparando Área...\n");
+                        printf("Carta 1: %.2f | Carta 2: %.2f\n", areakm1, areakm2);
+                        (areakm1 > areakm2) ? printf("Carta 1 venceu este atributo!\n") : printf("Carta 2 venceu este atributo!\n");
+                        soma1 += areakm1;
+                        soma2 += areakm2;
+                        break;
+                    case 3:
+                        printf("\nComparando PIB...\n");
+                        printf("Carta 1: %.2f | Carta 2: %.2f\n", pib1, pib2);
+                        (pib1 > pib2) ? printf("Carta 1 venceu este atributo!\n") : printf("Carta 2 venceu este atributo!\n");
+                        soma1 += pib1;
+                        soma2 += pib2;
+                        break;
+                    case 4:
+                        printf("\nComparando Densidade Populacional (menor vence)...\n");
+                        printf("Carta 1: %.2f | Carta 2: %.2f\n", densidade1, densidade2);
+                        (densidade1 < densidade2) ? printf("Carta 1 venceu este atributo!\n") : printf("Carta 2 venceu este atributo!\n");
+                        soma1 += densidade1;
+                        soma2 += densidade2;
+                        break;
+                    case 5:
+                        printf("\nComparando PIB per Capita...\n");
+                        printf("Carta 1: %.2f | Carta 2: %.2f\n", pibPercapita1, pibPercapita2);
+                        (pibPercapita1 > pibPercapita2) ? printf("Carta 1 venceu este atributo!\n") : printf("Carta 2 venceu este atributo!\n");
+                        soma1 += pibPercapita1;
+                        soma2 += pibPercapita2;
+                        break;
+                }
+            }
+
+            printf("\nSoma dos atributos:\nCarta 1: %.2f | Carta 2: %.2f\n", soma1, soma2);
+            if(soma1 > soma2) printf("Carta 1 venceu a rodada!\n\n");
+            else if(soma2 > soma1) printf("Carta 2 venceu a rodada!\n\n");
+            else printf("Empate!\n\n");
+
+        } else if (opcao == 0){
             printf("Você escolheu sair, o programa foi encerrado!\n\n");
             menu = 0;
 
@@ -168,5 +229,5 @@ int main() {
         }
     }
     
-       return 0;
+    return 0;
 }
